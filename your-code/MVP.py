@@ -246,6 +246,7 @@ def examine_item(item_name):
         print("The item you requested is not found in the current room.")
     
     if(next_room and input("Do you want to go to the next room? Enter 'yes' or 'no'").strip() == 'yes'):
+        print(next_room)
         play_room(next_room)
     else:
         play_room(current_room)
