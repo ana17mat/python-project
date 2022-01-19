@@ -7,9 +7,9 @@ Created on Tue Jan 18 19:20:52 2022
 @author: anamatias
 """
 
-
-
 # define rooms and items
+
+
 
 door_a = {
     "name": "door a",
@@ -151,6 +151,47 @@ INIT_GAME_STATE = {
 
 
 
+#PARA A INTERFACE:
+    
+import pygame
+import sys   
+pygame.font.init()
+
+orange=(255,128,0)
+green=(0,204,102)
+blue=(51,153,255)
+red=(255,255,51)
+
+myfont = pygame.font.SysFont('Arial', 30)
+
+screen=pygame.display.set_mode((1300,600))
+
+#IMAGENS
+img_door_a=pygame.image.load("/Users/anamatias/Desktop/IRONHACK/Project_week1/python-project/your-code/door_a.png")
+img_door_a=pygame.transform.scale(img_door_a, (200,200))
+
+img_piano=pygame.image.load("/Users/anamatias/Desktop/IRONHACK/Project_week1/python-project/your-code/piano.png")
+img_piano=pygame.transform.scale(img_piano, (200,200))
+
+
+
+
+
+
+
+# def wait(b):
+#     #WAIT WHILE B IS TRUE
+#     while b:
+#         for event in pygame.event.get():
+            
+#             if event.type==pygame.QUIT:
+#                 pygame.quit()
+#                 sys.exit()
+
+
+
+
+
 
 def linebreak():
     """
@@ -162,8 +203,27 @@ def start_game():
     """
     Start the game
     """
-    print("You wake up on a couch and find yourself in a strange house with no windows which you have never been to before. You don't remember why you are here and what had happened before. You feel some unknown danger is approaching and you must get out of the house, NOW!")
-    play_room(game_state["current_room"])
+    pygame.init()
+    pygame.display.set_caption('Game Room')
+    screen.fill(blue);
+    pygame.display.flip()
+    
+    #POR INTERFACE A DIZER CLICK ANYWHERE TO CONTINUE!!
+    while True:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONUP:
+                play_room(game_state["current_room"])
+                
+        
+        
+
+    
+    
+    #print("You wake up on a couch and find yourself in a strange house with no windows which you have never been to before. You don't remember why you are here and what had happened before. You feel some unknown danger is approaching and you must get out of the house, NOW!")
+    #play_room(game_state["current_room"])
 
 def play_room(room):
     """
@@ -171,21 +231,45 @@ def play_room(room):
     If it is, the game will end with success. Otherwise, let player either 
     explore (list all items in this room) or examine an item found here.
     """
-    game_state["current_room"] = room
-    if(game_state["current_room"] == game_state["target_room"]):
-        print("Congrats! You escaped the room!")
-    else:
-        print("You are now in " + room["name"])
-        intended_action = input("What would you like to do? Type 'explore' or 'examine'?").strip()
-        if intended_action == "explore":
-            explore_room(room)
-            play_room(room)
-        elif intended_action == "examine":
-            examine_item(input("What would you like to examine?").strip())
-        else:
-            print("Not sure what you mean. Type 'explore' or 'examine'.")
-            play_room(room)
-        linebreak()
+    
+    #game_state["current_room"] = room
+    
+    
+    
+    
+    screen.blit(img_door_a,(100,200))
+    screen.blit(img_piano,(500,200))
+    pygame.display.flip()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # game_state["current_room"] = room
+    # if(game_state["current_room"] == game_state["target_room"]):
+    #     print("Congrats! You escaped the room!")
+    # else:
+    #     print("You are now in " + room["name"])
+    #     intended_action = input("What would you like to do? Type 'explore' or 'examine'?").strip()
+    #     if intended_action == "explore":
+    #         explore_room(room)
+    #         play_room(room)
+    #     elif intended_action == "examine":
+    #         examine_item(input("What would you like to examine?").strip())
+    #     else:
+    #         print("Not sure what you mean. Type 'explore' or 'examine'.")
+    #         play_room(room)
+    #     linebreak()
+
+
+
+
+
+
 
 def explore_room(room):
     """
@@ -249,24 +333,6 @@ def examine_item(item_name):
         play_room(next_room)
     else:
         play_room(current_room)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 game_state = INIT_GAME_STATE.copy()
