@@ -129,9 +129,14 @@ img_dresser=pygame.transform.scale(img_dresser, (200,200))
 img_bed=pygame.image.load("bed.png")
 img_bed=pygame.transform.scale(img_bed, (200,200))
 
-img_table=pygame.image.load("table.png")
+img_table=pygame.image.load("crown.png")
 img_table=pygame.transform.scale(img_table, (200,200))
 
+img_shield=pygame.image.load("shield.png")
+img_shield=pygame.transform.scale(img_shield, (200,200))
+
+img_painting=pygame.image.load("painting.png")
+img_painting=pygame.transform.scale(img_painting, (200,200))
 
 
 
@@ -202,9 +207,9 @@ key_d = {
 }
 
 doublebed = {
-    "name": "double bed",
+    "name": "Diana Painting",
     "type": "furniture",
-    "image":img_bed,
+    "image":img_painting,
 }
 
 dresser = {
@@ -215,7 +220,7 @@ dresser = {
 
 
 diningtable = {
-    "name": "dining table",
+    "name": "Queen's Crown",
     "type": "furniture",
     "image":img_table,
 }
@@ -232,35 +237,39 @@ piano = {
 }
 
 queenbed = {
-    "name": "queen bed",
+    "name": "William's bed",
     "type": "furniture",
     "image":img_bed,
 }
 
-
+Shield = {
+    "name": "Shield",
+    "type": "furniture",
+    "image":img_shield,
+}
 
 
 
 
 game_room = {
-    "name": "game room",
+    "name": "Entry Hall",
     "type": "room",
     "color": blue1,
 }
 
 bedroom1 = {
-    "name": "bedroom 1",
+    "name": "Wiillam's Bedroom",
     "type": "room",
     "color": green,
 }
 bedroom2 = {
-    "name": "bedroom 2",
+    "name": "Harry's Bedroom",
     "type": "room",
     "color": blue2,
 }
 
 livingroom = {
-    "name": "living room",
+    "name": "Queen's Bedroom",
     "type": "room",
     "color": blue3,
 }
@@ -288,14 +297,14 @@ start_time=0
 # define which items/rooms are related
 
 object_relations = {
-    "game room": [couch, door_a, piano, potion],
+    "Entry Hall": [couch, door_a, piano, potion],
     "piano": [key_a],
-    "bedroom 1": [door_a, queenbed, door_b, door_c],
-    "queen bed": [key_b],
-    "bedroom 2": [door_b, dresser, doublebed],
-    "double bed": [key_c],
-    "dresser":[key_d],
-    "living room": [door_c, diningtable, door_d],
+    "Wiillam's Bedroom": [door_a, queenbed, door_b, door_c , Shield],
+    "William's bed": [key_b],
+    "Shield": [key_c],
+    "Harry's Bedroom": [door_b, dresser, doublebed],
+    "Queen's Bedroom": [door_c, diningtable, door_d],
+    "Queen's Crown": [key_d],
     "outside": [door_d],
     "door a": [game_room, bedroom1],
     "door b": [bedroom1, bedroom2],
