@@ -28,7 +28,7 @@ blue3=(0,65,106)
 red=(255,255,51)
 yellow=(255,255,0)
 white=(255,255,255)
-grey=(70,70,70)
+grey=(142,142,142)
 
 myfont = pygame.font.SysFont('Arial', 30)
 
@@ -280,7 +280,7 @@ all_rooms = [game_room, bedroom1, outside, livingroom, bedroom2]
 
 all_doors = [door_a, door_b, door_c, door_d]
 
-max_en=25
+max_en=35
 start_time=0
 
 
@@ -517,6 +517,18 @@ def play_room(room):
         
         end_time=time.time()
         
+        
+        
+        
+        pygame.display.set_caption('Congrats! You escaped the room!')
+        screen.blit(img_end,(0,0))
+        screen.blit(myfont.render("Your time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(250,520))
+        
+        
+        
+        pygame.display.flip()
+    
+        
         while True:
             
             for event in pygame.event.get():
@@ -524,14 +536,7 @@ def play_room(room):
                     pygame.quit()
                     sys.exit()
             
-            pygame.display.set_caption('Congrats! You escaped the room!')
-            screen.blit(img_end,(0,0))
-            screen.blit(myfont.render(nome+"'s time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(250,520))
             
-            
-            
-            pygame.display.flip()
-        
         
         
             #round((time.time() - start_time),1)
@@ -540,7 +545,8 @@ def play_room(room):
         
     else:
         
-       
+        
+      
         pygame.display.set_caption(room['name'].upper())
         screen.fill(room['color'])
         screen.blit(myfont.render(room['name'].upper(), False, white),(50,80))
@@ -553,6 +559,23 @@ def play_room(room):
         
         b=True
         while b:
+            
+            
+            
+            temp_surface = pygame.Surface((110,40))
+            temp_surface.fill((grey))
+            #temp_surface.blit(text, (0, 0))
+            screen.blit(temp_surface, (1150,10))
+            
+            
+            
+            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            
+            pygame.display.flip()
+            
+            
+            
+            
             
             for event in pygame.event.get():
                 
@@ -776,9 +799,17 @@ def examine_item(item_name):
         
         b=True
         while b:
-
-
-
+            
+            temp_surface = pygame.Surface((110,40))
+            temp_surface.fill((grey))
+            #temp_surface.blit(text, (0, 0))
+            screen.blit(temp_surface, (1150,10))
+            
+            
+            
+            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            
+            pygame.display.flip()
 
             
             for event in pygame.event.get():
@@ -817,6 +848,18 @@ def examine_item(item_name):
         
         b=True
         while b:
+            
+            temp_surface = pygame.Surface((110,40))
+            temp_surface.fill((grey))
+            #temp_surface.blit(text, (0, 0))
+            screen.blit(temp_surface, (1150,10))
+            
+            
+            
+            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            
+            pygame.display.flip()
+        
             
             for event in pygame.event.get():
                 
