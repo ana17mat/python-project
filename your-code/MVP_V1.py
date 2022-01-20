@@ -14,7 +14,11 @@ Created on Tue Jan 18 19:20:52 2022
     
 import pygame
 import sys   
-import time
+
+
+
+
+
 
 
 
@@ -281,8 +285,6 @@ all_rooms = [game_room, bedroom1, outside, livingroom, bedroom2]
 all_doors = [door_a, door_b, door_c, door_d]
 
 max_en=25
-start_time=0
-
 
 
 # define which items/rooms are related
@@ -439,23 +441,6 @@ def start_game():
     """
     Start the game
     """
-    
-    
-    # global nome
-    # nome=''
-
-    # while nome=='':
-
-    #     nome=input('What is your name').strip()
-        
-        
-        
-        
-        
-    # global nome
-    # nome=input('What is your name').strip()
-    
-    
     pygame.init()
     pygame.display.set_caption('Start')
     
@@ -474,18 +459,6 @@ def start_game():
                 
             if event.type==pygame.KEYDOWN:    
                 if event.key == pygame.K_RETURN: 
-                    
-                    
-                    
-                    global start_time
-                    
-                    start_time=time.time()
-                    
-                    # f=open('resultados.txt',w+)
-                    # f.write('Resultados')
-                    # f.close()
-                    
-                    
                     play_room(game_state["current_room"])
                     b=False    
             
@@ -515,8 +488,6 @@ def play_room(room):
         pygame.mixer.music.load('yay.mp3')
         pygame.mixer.music.play()
         
-        end_time=time.time()
-        
         while True:
             
             for event in pygame.event.get():
@@ -526,15 +497,11 @@ def play_room(room):
             
             pygame.display.set_caption('Congrats! You escaped the room!')
             screen.blit(img_end,(0,0))
-            screen.blit(myfont.render(nome+"'s time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(250,520))
-            
-            
-            
             pygame.display.flip()
         
         
         
-            #round((time.time() - start_time),1)
+        
         
         
         
@@ -839,11 +806,8 @@ def examine_item(item_name):
 
 
 
-# nome=''
 
-# while nome=='':
 
-#     nome=input('What is your name').strip()
 
 
 

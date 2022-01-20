@@ -14,14 +14,18 @@ Created on Tue Jan 18 19:20:52 2022
     
 import pygame
 import sys   
-import time
+
+
+
+
+
 
 
 
 pygame.font.init()
 
 orange=(197,90,17)
-green=(102,124,38)
+green=(0,128,0)
 blue1=(30,144,255)
 blue2=(65,105,225)
 blue3=(0,65,106)
@@ -50,30 +54,14 @@ screen=pygame.display.set_mode((1270,600))
 
 
 
-
-
 img_start=pygame.image.load("start.png")
 img_start=pygame.transform.scale(img_start, (1270,600))
 
 
-img_over=pygame.image.load("over.png")
-img_over=pygame.transform.scale(img_over, (1270,600))
+
 
 img_end=pygame.image.load("end.png")
 img_end=pygame.transform.scale(img_end, (1270,600))
-
-
-
-
-img_en_g=pygame.image.load("en_g.png")
-img_en_g=pygame.transform.scale(img_en_g, (10,60))
-
-img_en_y=pygame.image.load("en_y.png")
-img_en_y=pygame.transform.scale(img_en_y, (10,60))
-
-img_en_r=pygame.image.load("en_r.png")
-img_en_r=pygame.transform.scale(img_en_r, (10,60))
-
 
 
 
@@ -92,11 +80,6 @@ img_key_d=pygame.image.load("key_d.png")
 img_key_d=pygame.transform.scale(img_key_d, (60,60))
 
 
-
-
-
-img_potion=pygame.image.load("potion.png")
-img_potion=pygame.transform.scale(img_potion, (200,200))
 
 
 
@@ -136,16 +119,6 @@ img_table=pygame.transform.scale(img_table, (200,200))
 
 
 # define rooms and items
-
-
-potion = {
-    "name": "potion",
-    "type": "potion",
-    "image":img_potion,
-}
-
-
-
 
 
 
@@ -280,22 +253,18 @@ all_rooms = [game_room, bedroom1, outside, livingroom, bedroom2]
 
 all_doors = [door_a, door_b, door_c, door_d]
 
-max_en=25
-start_time=0
-
-
 
 # define which items/rooms are related
 
 object_relations = {
-    "game room": [couch, door_a, piano, potion],
+    "game room": [couch, piano, door_a],
     "piano": [key_a],
-    "bedroom 1": [door_a, queenbed, door_b, door_c],
+    "bedroom 1": [door_a, door_b, door_c, queenbed],
     "queen bed": [key_b],
     "bedroom 2": [door_b, dresser, doublebed],
     "double bed": [key_c],
     "dresser":[key_d],
-    "living room": [door_c, diningtable, door_d],
+    "living room": [door_c, door_d, diningtable],
     "outside": [door_d],
     "door a": [game_room, bedroom1],
     "door b": [bedroom1, bedroom2],
@@ -311,112 +280,17 @@ object_relations = {
 INIT_GAME_STATE = {
     "current_room": game_room,
     "keys_collected": [],
-    "target_room": outside,
-    "energy": max_en,
+    "target_room": outside
 }
 
 
 
 
-# def game_over():
-    
-
-    
-#     #GAMEOVER
-    
-#     pygame.display.set_caption('GAME OVER')
-#     screen.blit(img_over,(0,0))
-#     pygame.display.flip()
-            
-    
-#     # pygame.mixer.init()
-#     # pygame.mixer.music.load('yay.mp3')
-#     # pygame.mixer.music.play()
-    
-    
- 
-#     b=True
-#     while b:
-        
-        
-
-        
-#         for event in pygame.event.get():
-#             if event.type==pygame.QUIT:
-#                 pygame.quit()
-#                 sys.exit()
-                
-#             elif event.type==pygame.KEYDOWN:    
-#                 if event.key == pygame.K_RETURN: 
-#                     game_state = INIT_GAME_STATE.copy()
-#                     start_game()
-#                     return game_state
-#                     b=False
-                  
-
-    
-
-
-    
 
 
 
 
-def show_keys(list_keys, en):
-    
-    
-    
-    if en<=0:
-     
-        
-        #GAMEOVER
-        
-        pygame.display.set_caption('GAME OVER')
-        screen.blit(img_over,(0,0))
-        pygame.display.flip()
-   
-     
-        b=True
-        while b:
-            
-            for event in pygame.event.get():
-                if event.type==pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                    
-                    
-                # elif event.type==pygame.KEYDOWN:    
-                #     if event.key == pygame.K_RETURN: 
-                #         game_state = INIT_GAME_STATE.copy()
-                #         start_game()
-                #         b=False
-                #         return game_state
-
-        
-    else:
-        
-        if en>(2*max_en)/3:
-            img_en=img_en_g
-        elif en>max_en/3:
-            img_en=img_en_y
-        else:
-            img_en=img_en_r
-            
-        
-        screen.blit(myfont_1.render('energy:', False, white),(600,500))
-        
-        p=660
-        for i in range(0,en):
-            screen.blit(img_en,(p,530))
-            p+=14
-        
-        
-        
-        
-        
-        
-    
-    
+def show_keys(list_keys):
     
     if list_keys:
         
@@ -428,7 +302,7 @@ def show_keys(list_keys, en):
             screen.blit(k["image"],(p,530))
             p+=60
             
-    pygame.display.update()
+        pygame.display.update()
 
 
 
@@ -439,23 +313,6 @@ def start_game():
     """
     Start the game
     """
-    
-    
-    # global nome
-    # nome=''
-
-    # while nome=='':
-
-    #     nome=input('What is your name').strip()
-        
-        
-        
-        
-        
-    # global nome
-    # nome=input('What is your name').strip()
-    
-    
     pygame.init()
     pygame.display.set_caption('Start')
     
@@ -474,18 +331,6 @@ def start_game():
                 
             if event.type==pygame.KEYDOWN:    
                 if event.key == pygame.K_RETURN: 
-                    
-                    
-                    
-                    global start_time
-                    
-                    start_time=time.time()
-                    
-                    # f=open('resultados.txt',w+)
-                    # f.write('Resultados')
-                    # f.close()
-                    
-                    
                     play_room(game_state["current_room"])
                     b=False    
             
@@ -509,13 +354,9 @@ def play_room(room):
     
     if(game_state["current_room"] == game_state["target_room"]):
         
-        
-        
         pygame.mixer.init()
         pygame.mixer.music.load('yay.mp3')
         pygame.mixer.music.play()
-        
-        end_time=time.time()
         
         while True:
             
@@ -526,15 +367,11 @@ def play_room(room):
             
             pygame.display.set_caption('Congrats! You escaped the room!')
             screen.blit(img_end,(0,0))
-            screen.blit(myfont.render(nome+"'s time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(250,520))
-            
-            
-            
             pygame.display.flip()
         
         
         
-            #round((time.time() - start_time),1)
+        
         
         
         
@@ -545,8 +382,7 @@ def play_room(room):
         screen.fill(room['color'])
         screen.blit(myfont.render(room['name'].upper(), False, white),(50,80))
         
-        show_keys(game_state['keys_collected'],game_state['energy']) 
-        
+        show_keys(game_state['keys_collected']) 
         
         #pygame.display.flip()
         items1=explore_room(room)
@@ -653,48 +489,12 @@ def examine_item(item_name):
     play either the current or the next room depending on the game state
     to keep playing.
     """
-    
-    game_state['energy']-=1  #testing
-    
     current_room = game_state["current_room"]
     next_room = ""
     output = None
     
     for item in object_relations[current_room["name"]]:
-        
-        if(item["type"] == "potion"):
-            
-            
-            
-            
-            # print(max_en)
-            # print(game_state['energy'])
-            # print(game_state['energy']<max_en-1)
-            
-            if game_state['energy']+1>=max_en/3:
-    
-    
-                output='You examine this bottle and realize it is an energy potion.' #'You are afraid of possible side effects so you put it back.'
-                output2='You are afraid of possible side effects so you put it back.'
-                #screen.blit(myfont.render('You are afraid of possible side effects so you put it back.', False, white),(50,300))
-                
-                
-              
-            else:
-              
-                
-                game_state['energy']=max_en
-                output='You examine this bottle and realize it is an energy potion.' #You are feeling really tired so you drink it out of desperation and feel energized.'
-                output2='You are feeling really tired so you drink it out of desperation and feel energized.'
-                #screen.blit(myfont.render('You are feeling really tired so you drink it out of desperation and feel energized.', False, white),(50,300))
-               
-                
-        
-        
-        
-        
-        
-        elif(item["name"] == item_name):
+        if(item["name"] == item_name):
             
             output = "You examine " + item_name + ". "
             
@@ -746,17 +546,10 @@ def examine_item(item_name):
             
     screen.fill(current_room['color'])
     screen.blit(myfont.render(output, False, white),(50,100))
-    if(item["type"] == "potion"): screen.blit(myfont.render(output2, False, white),(50,150))
-        
-    
-    
-    
-    
     
     #screen.blit(myfont.render('Press anywhere to continue', False, white),(50,300))
     
-    show_keys(game_state['keys_collected'],game_state['energy']) 
-    
+    show_keys(game_state['keys_collected']) 
     
     
 
@@ -794,18 +587,9 @@ def examine_item(item_name):
                     
                 elif event.type==pygame.KEYDOWN:    
                     if event.key == pygame.K_BACKSPACE: 
-                        
-                        
-                        
                         play_room(current_room)
                         b=False
                     if event.key == pygame.K_RETURN:
-
-                       
-                        game_state['energy']-=2  #testing
-                     
-
-
                         play_room(next_room)
                         b=False
         
@@ -839,11 +623,8 @@ def examine_item(item_name):
 
 
 
-# nome=''
 
-# while nome=='':
 
-#     nome=input('What is your name').strip()
 
 
 
