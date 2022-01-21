@@ -283,7 +283,7 @@ all_rooms = [game_room, bedroom1, outside, livingroom, bedroom2]
 
 all_doors = [door_a, door_b, door_c, door_d]
 
-max_en=35
+max_en=25
 
 max_time=30
 
