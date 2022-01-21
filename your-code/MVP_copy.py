@@ -285,7 +285,7 @@ all_doors = [door_a, door_b, door_c, door_d]
 
 max_en=25
 
-max_time=30
+max_time=200
 
 
 start_time=0
