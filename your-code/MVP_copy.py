@@ -42,13 +42,7 @@ screen=pygame.display.set_mode((1270,600))
 
 
 
-
-
-
-
 #IMAGENS
-
-
 
 
 
@@ -129,9 +123,14 @@ img_dresser=pygame.transform.scale(img_dresser, (200,200))
 img_bed=pygame.image.load("bed.png")
 img_bed=pygame.transform.scale(img_bed, (200,200))
 
-img_table=pygame.image.load("table.png")
+img_table=pygame.image.load("crown.png")
 img_table=pygame.transform.scale(img_table, (200,200))
 
+img_shield=pygame.image.load("shield.png")
+img_shield=pygame.transform.scale(img_shield, (200,200))
+
+img_painting=pygame.image.load("painting.png")
+img_painting=pygame.transform.scale(img_painting, (200,200))
 
 
 
@@ -202,9 +201,9 @@ key_d = {
 }
 
 doublebed = {
-    "name": "double bed",
+    "name": "Diana Painting",
     "type": "furniture",
-    "image":img_bed,
+    "image":img_painting,
 }
 
 dresser = {
@@ -215,7 +214,7 @@ dresser = {
 
 
 diningtable = {
-    "name": "dining table",
+    "name": "Queen's Crown",
     "type": "furniture",
     "image":img_table,
 }
@@ -232,35 +231,39 @@ piano = {
 }
 
 queenbed = {
-    "name": "queen bed",
+    "name": "William's bed",
     "type": "furniture",
     "image":img_bed,
 }
 
-
+shield = {
+    "name": "shield",
+    "type": "furniture",
+    "image":img_shield,
+}
 
 
 
 
 game_room = {
-    "name": "game room",
+    "name": "Entry Hall",
     "type": "room",
     "color": blue1,
 }
 
 bedroom1 = {
-    "name": "bedroom 1",
+    "name": "William's Bedroom",
     "type": "room",
     "color": green,
 }
 bedroom2 = {
-    "name": "bedroom 2",
+    "name": "Harry's Bedroom",
     "type": "room",
     "color": blue2,
 }
 
 livingroom = {
-    "name": "living room",
+    "name": "Queen's Bedroom",
     "type": "room",
     "color": blue3,
 }
@@ -281,6 +284,10 @@ all_rooms = [game_room, bedroom1, outside, livingroom, bedroom2]
 all_doors = [door_a, door_b, door_c, door_d]
 
 max_en=35
+
+max_time=100
+
+
 start_time=0
 
 
@@ -288,18 +295,18 @@ start_time=0
 # define which items/rooms are related
 
 object_relations = {
-    "game room": [couch, door_a, piano, potion],
+    "Entry Hall": [door_a, piano, door_c, potion],
     "piano": [key_a],
-    "bedroom 1": [door_a, queenbed, door_b, door_c],
-    "queen bed": [key_b],
-    "bedroom 2": [door_b, dresser, doublebed],
-    "double bed": [key_c],
-    "dresser":[key_d],
-    "living room": [door_c, diningtable, door_d],
+    "William's Bedroom": [door_a, queenbed, door_b, shield],
+    "William's bed": [key_b],
+    "shield": [key_c],
+    "Harry's Bedroom": [door_b, dresser, doublebed],
+    "Queen's Bedroom": [door_c, diningtable, door_d],
+    "Queen's Crown": [key_d],
     "outside": [door_d],
     "door a": [game_room, bedroom1],
     "door b": [bedroom1, bedroom2],
-    "door c": [bedroom1, livingroom],
+    "door c": [game_room, livingroom],
     "door d": [livingroom, outside],
 }
 
@@ -357,6 +364,19 @@ INIT_GAME_STATE = {
     
 
 
+def game_over():
+    pygame.display.set_caption('GAME OVER')
+    screen.blit(img_over,(0,0))
+    pygame.display.flip()
+
+ 
+    b=True
+    while b:
+        
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
     
 
 
@@ -367,30 +387,8 @@ def show_keys(list_keys, en):
     
     
     if en<=0:
-     
+        game_over()
         
-        #GAMEOVER
-        
-        pygame.display.set_caption('GAME OVER')
-        screen.blit(img_over,(0,0))
-        pygame.display.flip()
-   
-     
-        b=True
-        while b:
-            
-            for event in pygame.event.get():
-                if event.type==pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                    
-                    
-                # elif event.type==pygame.KEYDOWN:    
-                #     if event.key == pygame.K_RETURN: 
-                #         game_state = INIT_GAME_STATE.copy()
-                #         start_game()
-                #         b=False
-                #         return game_state
 
         
     else:
@@ -403,9 +401,9 @@ def show_keys(list_keys, en):
             img_en=img_en_r
             
         
-        screen.blit(myfont_1.render('energy:', False, white),(600,500))
+        screen.blit(myfont_1.render('energy:', False, white),(15,500))
         
-        p=660
+        p=60
         for i in range(0,en):
             screen.blit(img_en,(p,530))
             p+=14
@@ -414,16 +412,13 @@ def show_keys(list_keys, en):
         
         
         
-        
-    
-    
     
     if list_keys:
         
-        screen.blit(myfont_1.render('keys you have:', False, white),(15,500))
+        screen.blit(myfont_1.render('keys you have:', False, white),(600,500))
         
         
-        p=60
+        p=660
         for k in list_keys:
             screen.blit(k["image"],(p,530))
             p+=60
@@ -520,9 +515,9 @@ def play_room(room):
         
         
         
-        pygame.display.set_caption('Congrats! You escaped the room!')
+        pygame.display.set_caption('Congrats!')
         screen.blit(img_end,(0,0))
-        screen.blit(myfont.render("Your time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(250,520))
+        screen.blit(myfont.render("Your time was "+str(int(round((end_time - start_time),0)))+" seconds.", False, (47,85,151)),(300,125))
         
         
         
@@ -547,9 +542,9 @@ def play_room(room):
         
         
       
-        pygame.display.set_caption(room['name'].upper())
+        pygame.display.set_caption(room['name'])
         screen.fill(room['color'])
-        screen.blit(myfont.render(room['name'].upper(), False, white),(50,80))
+        screen.blit(myfont.render(room['name'], False, white),(50,80))
         
         show_keys(game_state['keys_collected'],game_state['energy']) 
         
@@ -562,14 +557,18 @@ def play_room(room):
             
             
             
-            temp_surface = pygame.Surface((110,40))
+            temp_surface = pygame.Surface((195,40))
             temp_surface.fill((grey))
             #temp_surface.blit(text, (0, 0))
-            screen.blit(temp_surface, (1150,10))
+            screen.blit(temp_surface, (1060,10))
             
             
             
-            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            
+            
+            if int(round((time.time()- start_time),0))>max_time: game_over()
+            
             
             pygame.display.flip()
             
@@ -677,7 +676,7 @@ def examine_item(item_name):
     to keep playing.
     """
     
-    game_state['energy']-=1  #testing
+    game_state['energy']-=1 
     
     current_room = game_state["current_room"]
     next_room = ""
@@ -704,9 +703,15 @@ def examine_item(item_name):
                 
               
             else:
+                
+                print(current_room["name"])
+                print(item["type"])
+                print(item)
               
                 
                 game_state['energy']=max_en
+
+
                 output='You examine this bottle and realize it is an energy potion.' #You are feeling really tired so you drink it out of desperation and feel energized.'
                 output2='You are feeling really tired so you drink it out of desperation and feel energized.'
                 #screen.blit(myfont.render('You are feeling really tired so you drink it out of desperation and feel energized.', False, white),(50,300))
@@ -800,14 +805,18 @@ def examine_item(item_name):
         b=True
         while b:
             
-            temp_surface = pygame.Surface((110,40))
+            temp_surface = pygame.Surface((195,40))
             temp_surface.fill((grey))
             #temp_surface.blit(text, (0, 0))
-            screen.blit(temp_surface, (1150,10))
+            screen.blit(temp_surface, (1060,10))
             
             
             
-            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            
+            
+            if int(round((time.time()- start_time),0))>max_time: game_over()
+            
             
             pygame.display.flip()
 
@@ -849,17 +858,20 @@ def examine_item(item_name):
         b=True
         while b:
             
-            temp_surface = pygame.Surface((110,40))
+            temp_surface = pygame.Surface((195,40))
             temp_surface.fill((grey))
             #temp_surface.blit(text, (0, 0))
-            screen.blit(temp_surface, (1150,10))
+            screen.blit(temp_surface, (1060,10))
             
             
             
-            screen.blit(myfont_1.render('Time:'+str(int(round((time.time()- start_time),0))), False, white),(1160,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            
+            
+            if int(round((time.time()- start_time),0))>max_time: game_over()
+            
             
             pygame.display.flip()
-        
             
             for event in pygame.event.get():
                 
