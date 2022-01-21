@@ -285,7 +285,7 @@ all_doors = [door_a, door_b, door_c, door_d]
 
 max_en=35
 
-max_time=100
+max_time=30
 
 
 start_time=0
@@ -564,7 +564,7 @@ def play_room(room):
             
             
             
-            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(max_time-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
             
             
             if int(round((time.time()- start_time),0))>max_time: game_over()
@@ -812,7 +812,7 @@ def examine_item(item_name):
             
             
             
-            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(max_time-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
             
             
             if int(round((time.time()- start_time),0))>max_time: game_over()
@@ -865,7 +865,7 @@ def examine_item(item_name):
             
             
             
-            screen.blit(myfont_1.render('Remaining time: '+str(100-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
+            screen.blit(myfont_1.render('Remaining time: '+str(max_time-int(round((time.time()- start_time),0))), False, white),(1070,20)) #contartempo
             
             
             if int(round((time.time()- start_time),0))>max_time: game_over()
